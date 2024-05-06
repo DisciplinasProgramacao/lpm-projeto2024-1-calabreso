@@ -1,4 +1,4 @@
-package restaurante.lpm.opcaoCardapio;
+package main.java.restaurante.lpm.business;
 
 public class OpcaoCardapio {
     public String getNome() {

@@ -1,4 +1,6 @@
-package restaurante.lpm;
+package main.java.restaurante.lpm;
+
+import main.java.restaurante.lpm.business.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,4 +15,3 @@ public class Main {
     }
 }
 
-}

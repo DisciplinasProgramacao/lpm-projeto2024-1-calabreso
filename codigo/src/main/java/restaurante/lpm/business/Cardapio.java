@@ -1,6 +1,5 @@
-package restaurante.lpm.cardapio;
+package main.java.restaurante.lpm.business;
 
-import restaurante.lpm.opcaoCardapio.OpcaoCardapio;
 
 import java.util.Scanner;
 

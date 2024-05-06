@@ -1,7 +1,4 @@
-package restaurante.lpm.restaurante;
-
-import restaurante.lpm.mesa.Mesa;
-import restaurante.lpm.reserva.Reserva;
+package main.java.restaurante.lpm.business;
 
 import java.util.Arrays;
 import java.util.Comparator;

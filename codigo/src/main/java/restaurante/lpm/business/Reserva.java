@@ -1,4 +1,4 @@
-package restaurante.lpm.reserva;
+package main.java.restaurante.lpm.business;
 
 import java.util.Date;
 

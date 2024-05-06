@@ -1,8 +1,4 @@
-package restaurante.lpm.garcom;
-
-import restaurante.lpm.cardapio.Cardapio;
-import restaurante.lpm.opcaoCardapio.OpcaoCardapio;
-import restaurante.lpm.pedido.Pedido;
+package main.java.restaurante.lpm.business;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,3 +1,5 @@
+package main.java.restaurante.lpm.business;
+
 public class Cliente {
     private int id;
     private String nome;

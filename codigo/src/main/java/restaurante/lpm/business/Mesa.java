@@ -1,4 +1,4 @@
-package restaurante.lpm.mesa;
+package main.java.restaurante.lpm.business;
 
 public class Mesa {
 
