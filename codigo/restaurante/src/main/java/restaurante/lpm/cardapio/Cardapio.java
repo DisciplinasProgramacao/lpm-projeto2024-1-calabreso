@@ -1,83 +1,76 @@
-package restaurante.lpm.cardapio;
+package restaurante.lpm.pedido;
 
 import restaurante.lpm.opcaoCardapio.OpcaoCardapio;
+import restaurante.lpm.cardapio.Cardapio;
 
-import java.util.Scanner;
+import java.util.ArrayList;
 
-public class Cardapio {
+public class Pedido {
 
-	public Cardapio() {
-		this.bebidas = new OpcaoCardapio[]{
-				new OpcaoCardapio("Água", 3, 1),
-				new OpcaoCardapio("Copo de suco", 7, 2),
-				new OpcaoCardapio("Refrigerante orgânico", 7, 3),
-				new OpcaoCardapio("Cerveja vegana", 9, 4),
-				new OpcaoCardapio("Taça de vinho vegano", 18, 5)
-		};
-		this.comidas = new OpcaoCardapio[]{
-				new OpcaoCardapio("Moqueca de palmito", 32, 1),
-				new OpcaoCardapio("Falafel assado", 20, 2),
-				new OpcaoCardapio("Salada primavera com macarrão Konjac", 25, 3),
-				new OpcaoCardapio("Escondidinho de inhame", 18, 4),
-				new OpcaoCardapio("Strogonoff de cogumelos", 35, 5),
-				new OpcaoCardapio("Caçarola de legumes", 22, 6)
-		};
-	}
+    private int idMesa;
+    private ArrayList<OpcaoCardapio> itens;
+    private double valorTotal;
+    private final double TAXA = 0.1;
 
-	public OpcaoCardapio[] getBebidas() {
-		return bebidas;
-	}
+    // Adicionando uma referência ao cardápio
+    private Cardapio cardapio;
 
-	public void setBebidas(OpcaoCardapio[] bebidas) {
-		this.bebidas = bebidas;
-	}
+    public Pedido(Cardapio cardapio) {
+        this.cardapio = cardapio;
+        this.itens = new ArrayList<>();
+        this.valorTotal = 0.0;
+    }
 
-	public OpcaoCardapio[] getComidas() {
-		return comidas;
-	}
+    public int getIdMesa() {
+        return idMesa;
+    }
 
-	public void setComidas(OpcaoCardapio[] comidas) {
-		this.comidas = comidas;
-	}
+    public void setIdMesa(int idMesa) {
+        this.idMesa = idMesa;
+    }
 
-	private OpcaoCardapio[] bebidas;
-	private OpcaoCardapio[] comidas;
+    public ArrayList<OpcaoCardapio> getItens() {
+        return itens;
+    }
 
-	public void exibirCardapio() {
-		System.out.println("Deseja exibir o cardápio completo, ou apenas bebidas ou comidas?");
-		System.out.println("1- Cardápío completo");
-		System.out.println("2 - Bebidas");
-		System.out.println("3 - Comidas");
+    public double getValorTotal() {
+        return valorTotal;
+    }
 
-		Scanner scanner = new Scanner(System.in);
-		String opcao = scanner.nextLine();
-		switch (opcao) {
-			case "1":
-				this.exibirBebidas();
-				this.exibirComidas();
-				break;
-			case "2":
-				this.exibirBebidas();
-				break;
-			case "3":
-				this.exibirComidas();
-				break;
-			default:
-				System.out.println("Opção inválida");
-				break;
-		}
-		scanner.close();
-	}
+    public double getTAXA() {
+        return TAXA;
+    }
 
-	public void exibirBebidas() {
-		for (OpcaoCardapio bebida : this.getBebidas()) {
-			System.out.printf("- %s \t R$ %2f \n", bebida.getNome(), bebida.getPreco());
-		}
-	}
+    // Função para ver o menu
+    public void verMenu() {
+        cardapio.mostrarCardapio();
+    }
 
-	public void exibirComidas() {
-		for (OpcaoCardapio comida : this.getComidas()) {
-			System.out.printf("- %s \t R$ %2f \n", comida.getNome(), comida.getPreco());
-		}
-	}
+    // Função para selecionar um produto do menu
+    public OpcaoCardapio selecionarProduto(int codigo) {
+        return cardapio.buscarOpcao(codigo);
+    }
+
+    // Função para incluir um produto ao pedido
+    public void incluirProduto(OpcaoCardapio item) {
+        itens.add(item);
+        valorTotal += item.getPreco();
+    }
+
+    // Função para fechar a conta
+    public double fecharConta() {
+        double totalComTaxa = valorTotal * (1 + TAXA);
+        valorTotal = 0.0; // Resetando o valor total após fechar a conta
+        return totalComTaxa;
+    }
+
+    // Função para mostrar a conta
+    public void mostrarConta() {
+        System.out.println("----- Conta da Mesa " + idMesa + " -----");
+        for (OpcaoCardapio item : itens) {
+            System.out.println(item.getNome() + " - R$ " + item.getPreco());
+        }
+        System.out.println("Taxa: " + (TAXA * 100) + "%");
+        System.out.println("Total: R$ " + fecharConta());
+    }
 }
