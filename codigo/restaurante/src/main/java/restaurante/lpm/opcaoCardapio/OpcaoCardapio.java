@@ -1,6 +1,18 @@
 package restaurante.lpm.opcaoCardapio;
 
 public class OpcaoCardapio {
+    String nome;
+    double preco;
+    int id;
+    String tipo;
+
+    public OpcaoCardapio(String nome, double preco, int id, String tipo) {
+        this.nome = nome;
+        this.preco = preco;
+        this.id = id;
+        this.tipo = tipo;
+    }
+    
     public String getNome() {
         return nome;
     }
@@ -20,14 +32,12 @@ public class OpcaoCardapio {
     public int getId() {
         return id;
     }
+    
+    public String getTipo() {
+        return tipo;
+    }
 
-    String nome;
-    double preco;
-    int id;
-
-    public OpcaoCardapio(String nome, double preco, int id) {
-        this.nome = nome;
-        this.preco = preco;
-        this.id = id;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }
