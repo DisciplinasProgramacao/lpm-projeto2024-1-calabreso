@@ -2,45 +2,34 @@ package restaurante.lpm.cardapio;
 
 import restaurante.lpm.opcaoCardapio.OpcaoCardapio;
 
-import java.util.Scanner;
-
 public class Cardapio {
 
-	private OpcaoCardapio[] bebidas;
-	private OpcaoCardapio[] comidas;
+	private OpcaoCardapio[] opcoes;
 
 	public Cardapio() {
-		this.bebidas = new OpcaoCardapio[]{
+		this.opcoes = new OpcaoCardapio[]{
+			// Bebidas
 				new OpcaoCardapio("Água", 3, 1),
 				new OpcaoCardapio("Copo de suco", 7, 2),
 				new OpcaoCardapio("Refrigerante orgânico", 7, 3),
 				new OpcaoCardapio("Cerveja vegana", 9, 4),
-				new OpcaoCardapio("Taça de vinho vegano", 18, 5)
+				new OpcaoCardapio("Taça de vinho vegano", 18, 5),
+			// Comidas
+				new OpcaoCardapio("Moqueca de palmito", 32, 6),
+				new OpcaoCardapio("Falafel assado", 20, 7),
+				new OpcaoCardapio("Salada primavera com macarrão Konjac", 25, 8),
+				new OpcaoCardapio("Escondidinho de inhame", 18, 9),
+				new OpcaoCardapio("Strogonoff de cogumelos", 35, 10),
+				new OpcaoCardapio("Caçarola de legumes", 22, 11)
 		};
-		this.comidas = new OpcaoCardapio[]{
-				new OpcaoCardapio("Moqueca de palmito", 32, 1),
-				new OpcaoCardapio("Falafel assado", 20, 2),
-				new OpcaoCardapio("Salada primavera com macarrão Konjac", 25, 3),
-				new OpcaoCardapio("Escondidinho de inhame", 18, 4),
-				new OpcaoCardapio("Strogonoff de cogumelos", 35, 5),
-				new OpcaoCardapio("Caçarola de legumes", 22, 6)
-		};
 	}
 
-	public OpcaoCardapio[] getBebidas() {
-		return bebidas;
+	public OpcaoCardapio[] getOpcoes() {
+		return opcoes;
 	}
 
-	public void setBebidas(OpcaoCardapio[] bebidas) {
-		this.bebidas = bebidas;
-	}
-
-	public OpcaoCardapio[] getComidas() {
-		return comidas;
-	}
-
-	public void setComidas(OpcaoCardapio[] comidas) {
-		this.comidas = comidas;
+	public void setOpcoes(OpcaoCardapio[] opcoes) {
+		this.opcoes = opcoes;
 	}
 
 	public String escolherFormatoCardapio() {
@@ -68,8 +57,8 @@ public class Cardapio {
 
 	public String exibirBebidas() {
 		String retornoBebidas = null;
-		for (OpcaoCardapio bebida : this.getBebidas()) {
-			retornoBebidas = "- " + bebida.getNome() + "\t R$ " + bebida.getPreco() + "\n";
+		for (OpcaoCardapio opcao : this.getOpcoes()) {
+			retornoBebidas = "- " + opcao.getNome() + "\t R$ " + opcao.getPreco() + "\n";
 		}
 
 		return retornoBebidas;
@@ -77,10 +66,15 @@ public class Cardapio {
 
 	public String exibirComidas() {
 		String retornoComidas = null;
-		for (OpcaoCardapio comida : this.getComidas()) {
-			retornoComidas = "- " + comida.getNome() + "\t R$ " + comida.getPreco() + "\n";
+		for (OpcaoCardapio opcao : this.getOpcoes()) {
+			retornoComidas = "- " + opcao.getNome() + "\t R$ " + opcao.getPreco() + "\n";
 		}
 
 		return retornoComidas;
+	}
+
+	public OpcaoCardapio getOpcaoById(int idOpcao) {
+		OpcaoCardapio opcao = this.getOpcoes()[1];
+		return opcao;
 	}
 }
