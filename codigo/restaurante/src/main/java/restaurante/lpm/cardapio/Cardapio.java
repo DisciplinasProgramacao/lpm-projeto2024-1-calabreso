@@ -9,18 +9,18 @@ public class Cardapio {
 	public Cardapio() {
 		this.opcoes = new OpcaoCardapio[]{
 			// Bebidas
-				new OpcaoCardapio("Água", 3, 1),
-				new OpcaoCardapio("Copo de suco", 7, 2),
-				new OpcaoCardapio("Refrigerante orgânico", 7, 3),
-				new OpcaoCardapio("Cerveja vegana", 9, 4),
-				new OpcaoCardapio("Taça de vinho vegano", 18, 5),
+				new OpcaoCardapio("Água", 3, 1, "bebida"),
+				new OpcaoCardapio("Copo de suco", 7, 2, "bebida"),
+				new OpcaoCardapio("Refrigerante orgânico", 7, 3, "bebida"),
+				new OpcaoCardapio("Cerveja vegana", 9, 4, "bebida"),
+				new OpcaoCardapio("Taça de vinho vegano", 18, 5, "bebida"),
 			// Comidas
-				new OpcaoCardapio("Moqueca de palmito", 32, 6),
-				new OpcaoCardapio("Falafel assado", 20, 7),
-				new OpcaoCardapio("Salada primavera com macarrão Konjac", 25, 8),
-				new OpcaoCardapio("Escondidinho de inhame", 18, 9),
-				new OpcaoCardapio("Strogonoff de cogumelos", 35, 10),
-				new OpcaoCardapio("Caçarola de legumes", 22, 11)
+				new OpcaoCardapio("Moqueca de palmito", 32, 6, "comida"),
+				new OpcaoCardapio("Falafel assado", 20, 7, "comida"),
+				new OpcaoCardapio("Salada primavera com macarrão Konjac", 25, 8, "comida"),
+				new OpcaoCardapio("Escondidinho de inhame", 18, 9, "comida"),
+				new OpcaoCardapio("Strogonoff de cogumelos", 35, 10, "comida"),
+				new OpcaoCardapio("Caçarola de legumes", 22, 11, "comida")
 		};
 	}
 
