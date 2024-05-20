@@ -6,6 +6,9 @@ import java.util.Scanner;
 
 public class Cardapio {
 
+	private OpcaoCardapio[] bebidas;
+	private OpcaoCardapio[] comidas;
+
 	public Cardapio() {
 		this.bebidas = new OpcaoCardapio[]{
 				new OpcaoCardapio("Água", 3, 1),
@@ -40,44 +43,44 @@ public class Cardapio {
 		this.comidas = comidas;
 	}
 
-	private OpcaoCardapio[] bebidas;
-	private OpcaoCardapio[] comidas;
+	public String escolherFormatoCardapio() {
+		return "Deseja exibir o cardápio completo, ou apenas bebidas ou comidas?\n1- Cardápío completo\n2 - Bebidas\n3 - Comidas";
+	}
 
-	public void exibirCardapio() {
-		System.out.println("Deseja exibir o cardápio completo, ou apenas bebidas ou comidas?");
-		System.out.println("1- Cardápío completo");
-		System.out.println("2 - Bebidas");
-		System.out.println("3 - Comidas");
-
-		Scanner scanner = new Scanner(System.in);
-		String opcao = scanner.nextLine();
+	public String exibirCardapio(String opcao) {
+		String retornoCardapio;
 		switch (opcao) {
 			case "1":
-				this.exibirBebidas();
-				this.exibirComidas();
+				retornoCardapio = this.exibirBebidas() + "\n" + this.exibirComidas();
 				break;
 			case "2":
-				this.exibirBebidas();
+				retornoCardapio = this.exibirBebidas();
 				break;
 			case "3":
-				this.exibirComidas();
+				retornoCardapio = this.exibirComidas();
 				break;
 			default:
-				System.out.println("Opção inválida");
+				retornoCardapio = "Opção inválida";
 				break;
 		}
-		scanner.close();
+		return retornoCardapio;
 	}
 
-	public void exibirBebidas() {
+	public String exibirBebidas() {
+		String retornoBebidas = null;
 		for (OpcaoCardapio bebida : this.getBebidas()) {
-			System.out.printf("- %s \t R$ %2f \n", bebida.getNome(), bebida.getPreco());
+			retornoBebidas = "- " + bebida.getNome() + "\t R$ " + bebida.getPreco() + "\n";
 		}
+
+		return retornoBebidas;
 	}
 
-	public void exibirComidas() {
+	public String exibirComidas() {
+		String retornoComidas = null;
 		for (OpcaoCardapio comida : this.getComidas()) {
-			System.out.printf("- %s \t R$ %2f \n", comida.getNome(), comida.getPreco());
+			retornoComidas = "- " + comida.getNome() + "\t R$ " + comida.getPreco() + "\n";
 		}
+
+		return retornoComidas;
 	}
 }
