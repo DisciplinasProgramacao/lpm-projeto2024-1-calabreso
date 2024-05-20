@@ -2,8 +2,11 @@ package restaurante.lpm;
 
 import restaurante.lpm.cardapio.Cardapio;
 import restaurante.lpm.mesa.Mesa;
+import restaurante.lpm.opcaoCardapio.OpcaoCardapio;
+import restaurante.lpm.pedido.Pedido;
 import restaurante.lpm.restaurante.Restaurante;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -24,5 +27,15 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String opcao = scanner.nextLine();
         System.out.println(cardapio.exibirCardapio(opcao));
+
+        ArrayList<OpcaoCardapio> opcoesEscolhidas = new ArrayList<>();
+        opcoesEscolhidas.add(new OpcaoCardapio("Moqueca de palmito", 32, 1));
+        opcoesEscolhidas.add(new OpcaoCardapio("Cerveja vegana", 9, 4));
+
+
+        Pedido pedido = new Pedido();
+        pedido.setIdMesa(1);
+        pedido.setItens(opcoesEscolhidas);
+        System.out.println(pedido.fecharPedido(2));
     }
 }

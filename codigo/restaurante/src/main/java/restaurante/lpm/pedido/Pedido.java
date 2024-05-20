@@ -6,6 +6,14 @@ import java.util.ArrayList;
 
 public class Pedido {
 
+	private int idMesa;
+
+	private ArrayList<OpcaoCardapio> itens;
+
+	private double valorTotal;
+
+	private final double TAXA = 0.1;
+
 	public int getIdMesa() {
 		return idMesa;
 	}
@@ -34,12 +42,16 @@ public class Pedido {
 		return TAXA;
 	}
 
-	private int idMesa;
+	public String fecharPedido(int qtdPessoasDividirConta) {
+		double valorTotalItens = 0.0;
+		for (OpcaoCardapio item : this.getItens()) {
+			valorTotalItens += item.getPreco();
+		}
 
-	private ArrayList<OpcaoCardapio> itens;
-
-	private double valorTotal;
-
-	private final double TAXA = 0.1;
+		this.setValorTotal(valorTotalItens + (valorTotalItens*this.getTAXA()));
+		return "Valor total do pedido: " + "\t" + this.getValorTotal() + "\n" +
+				"Valor por pessoa: " + "\t" + this.getValorTotal() / qtdPessoasDividirConta + "\n" +
+				"Agradecemos a preferência!";
+	}
 
 }
