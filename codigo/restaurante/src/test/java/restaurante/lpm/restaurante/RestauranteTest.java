@@ -60,7 +60,7 @@ class RestauranteTest {
         restaurante.alocarMesa(reserva, mesaDisponivel);
 
         // Assert
-        assertTrue(mesaDisponivel.getDisponibilidade());
+        assertFalse(mesaDisponivel.getDisponibilidade());
     }
 
     @Test
@@ -89,18 +89,15 @@ class RestauranteTest {
     @Test
     void testeDesalocarMesa() {
         // Arrange
-        // Act
-        // Assert
-    }
-
-    @Test
-    void testeNaoDesalocarMesa() {
-        // Arrange
-        Mesa mesaDesalocada = new Mesa(1, 2, true); // Mesa inicialmente disponível
-        Mesa[] mesas = {mesaDesalocada};
+        Mesa mesaOcupada = new Mesa(1, 4, false);
+        Mesa[] mesas = {mesaOcupada};
         restaurante.setMesas(mesas);
+        Reserva reserva = new Reserva(new Date(), 2);
 
-        // Act & Assert
-        assertThrows(Exception.class, () -> restaurante.desalocarMesa(1));
+        // Act
+        restaurante.desalocarMesa(mesaOcupada);
+
+        // Assert
+        assertTrue(mesaOcupada.getDisponibilidade());
     }
 }

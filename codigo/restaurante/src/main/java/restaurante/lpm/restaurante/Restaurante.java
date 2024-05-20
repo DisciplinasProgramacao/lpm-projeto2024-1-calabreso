@@ -62,21 +62,13 @@ public class Restaurante {
         return Optional.empty();
     }
 
-    public void alocarMesa(Reserva reserva, Mesa mesa) throws Exception {
-        try {
-            reserva.setIdMesa(mesa.getIdMesa());
-            mesa.setDisponibilidade(false);
-        } catch (Exception e) {
-            throw new Exception("Mesa já alocada para outro cliente");
-        }
+    public void alocarMesa(Reserva reserva, Mesa mesa) {
+        reserva.setIdMesa(mesa.getIdMesa());
+        mesa.setDisponibilidade(false);
     }
 
-    public void desalocarMesa(int cliente) throws Exception {
-        throw new Exception("method not implemented yet");
-    }
-
-    public void exibirCardapio() {
-        this.cardapio.exibirCardapio();
+    public void desalocarMesa(Mesa mesa) {
+        mesa.setDisponibilidade(true);
     }
 }
 
