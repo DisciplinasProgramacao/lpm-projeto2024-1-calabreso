@@ -1,4 +1,4 @@
-package restaurante.lpm.opcaoCardapio;
+package com.calabreso.restaurante.entity;
 
 public class OpcaoCardapio {
     String nome;

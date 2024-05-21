@@ -1,6 +1,4 @@
-package restaurante.lpm.cardapio;
-
-import restaurante.lpm.opcaoCardapio.OpcaoCardapio;
+package com.calabreso.restaurante.entity;
 
 import java.util.Arrays;
 import java.util.Objects;
