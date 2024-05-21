@@ -2,6 +2,10 @@ package restaurante.lpm.cardapio;
 
 import restaurante.lpm.opcaoCardapio.OpcaoCardapio;
 
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.stream.Stream;
+
 public class Cardapio {
 
 	private OpcaoCardapio[] opcoes;
@@ -37,28 +41,20 @@ public class Cardapio {
 	}
 
 	public String exibirCardapio(String opcao) {
-		String retornoCardapio;
-		switch (opcao) {
-			case "1":
-				retornoCardapio = this.exibirBebidas() + "\n" + this.exibirComidas();
-				break;
-			case "2":
-				retornoCardapio = this.exibirBebidas();
-				break;
-			case "3":
-				retornoCardapio = this.exibirComidas();
-				break;
-			default:
-				retornoCardapio = "Opção inválida";
-				break;
-		}
-		return retornoCardapio;
+        return switch (opcao) {
+			case "1" -> this.exibirBebidas() + "\n" + this.exibirComidas();
+			case "2" -> this.exibirBebidas();
+			case "3" -> this.exibirComidas();
+			default -> "Opção inválida";
+		};
 	}
 
 	public String exibirBebidas() {
 		String retornoBebidas = null;
 		for (OpcaoCardapio opcao : this.getOpcoes()) {
-			retornoBebidas = "- " + opcao.getNome() + "\t R$ " + opcao.getPreco() + "\n";
+			if (Objects.equals(opcao.getTipo(), "bebida")) {
+				retornoBebidas = "- " + opcao.getNome() + "\t R$ " + opcao.getPreco() + "\n";
+			}
 		}
 
 		return retornoBebidas;
@@ -67,14 +63,16 @@ public class Cardapio {
 	public String exibirComidas() {
 		String retornoComidas = null;
 		for (OpcaoCardapio opcao : this.getOpcoes()) {
-			retornoComidas = "- " + opcao.getNome() + "\t R$ " + opcao.getPreco() + "\n";
+			if (Objects.equals(opcao.getTipo(), "comida")) {
+				retornoComidas = "- " + opcao.getNome() + "\t R$ " + opcao.getPreco() + "\n";
+			}
 		}
 
 		return retornoComidas;
 	}
 
 	public OpcaoCardapio getOpcaoById(int idOpcao) {
-		OpcaoCardapio opcao = this.getOpcoes()[1];
-		return opcao;
+		Stream<OpcaoCardapio> opcao = Arrays.stream(this.getOpcoes()).filter(opcaoCardapio -> opcaoCardapio.getId() == idOpcao);
+		return (OpcaoCardapio) opcao;
 	}
 }

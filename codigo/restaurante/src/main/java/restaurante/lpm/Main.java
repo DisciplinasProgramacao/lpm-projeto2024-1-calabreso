@@ -29,8 +29,8 @@ public class Main {
         System.out.println(cardapio.exibirCardapio(opcao));
 
         ArrayList<OpcaoCardapio> opcoesEscolhidas = new ArrayList<>();
-        opcoesEscolhidas.add(new OpcaoCardapio("Moqueca de palmito", 32, 1));
-        opcoesEscolhidas.add(new OpcaoCardapio("Cerveja vegana", 9, 4));
+        opcoesEscolhidas.add(cardapio.getOpcaoById(1));
+        opcoesEscolhidas.add(cardapio.getOpcaoById(4));
 
 
         Pedido pedido = new Pedido();
