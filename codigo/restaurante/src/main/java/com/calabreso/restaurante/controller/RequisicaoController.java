@@ -82,6 +82,8 @@ public class RequisicaoController {
     public int getQuantPessoasCliente(@PathVariable("id") int id, @PathVariable("idCliente") int idCliente) {
         return 0;
     }
-    
-   
+
 }
+    
+
+    

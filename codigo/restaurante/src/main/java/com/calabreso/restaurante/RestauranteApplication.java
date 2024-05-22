@@ -2,10 +2,10 @@ package com.calabreso.restaurante;
 
 import java.util.Scanner;
 
-import com.calabreso.restaurante.entity.Cliente;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.calabreso.restaurante.entity.Cliente;
 import com.calabreso.restaurante.entity.Requisicao;
 import com.calabreso.restaurante.entity.Restaurante;
 
