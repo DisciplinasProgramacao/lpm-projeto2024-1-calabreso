@@ -152,7 +152,7 @@ public class Restaurante {
         return cardapio.getOpcaoById(idOpcao);
     }
 
-    // Novo método para incluir produtos em uma requisição
+    // Método para incluir produtos em uma requisição
     public void incluirProdutoNaRequisicao(int idRequisicao, int idProduto) {
         Requisicao requisicao = localizarRequisicao(idRequisicao);
         if (requisicao != null) {
@@ -168,6 +168,7 @@ public class Restaurante {
         }
     }
 
+    // Método para localizar uma requisição
     private Requisicao localizarRequisicao(int idRequisicao) {
         for (Requisicao requisicao : atendidas) {
             if (requisicao != null && requisicao.getId() == idRequisicao) {
@@ -180,5 +181,27 @@ public class Restaurante {
             }
         }
         return null;
+    }
+
+    // Método para fechar uma requisição
+    public void fecharRequisicao(int idRequisicao) {
+        Requisicao requisicao = localizarRequisicao(idRequisicao);
+        if (requisicao != null) {
+            requisicao.encerrar();
+            System.out.println("Requisição encerrada.");
+        } else {
+            System.out.println("Requisição não encontrada.");
+        }
+    }
+
+    // Método para pedir a conta de uma requisição
+    public double pedirContaRequisicao(int idRequisicao) {
+        Requisicao requisicao = localizarRequisicao(idRequisicao);
+        if (requisicao != null) {
+            return requisicao.calcularTotal();
+        } else {
+            System.out.println("Requisição não encontrada.");
+            return 0.0;
+        }
     }
 }
