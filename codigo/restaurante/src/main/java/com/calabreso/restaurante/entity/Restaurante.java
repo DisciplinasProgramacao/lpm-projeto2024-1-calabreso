@@ -151,4 +151,34 @@ public class Restaurante {
     public OpcaoCardapio getOpcaoCardapioById(int idOpcao) {
         return cardapio.getOpcaoById(idOpcao);
     }
+
+    // Novo método para incluir produtos em uma requisição
+    public void incluirProdutoNaRequisicao(int idRequisicao, int idProduto) {
+        Requisicao requisicao = localizarRequisicao(idRequisicao);
+        if (requisicao != null) {
+            OpcaoCardapio opcao = getOpcaoCardapioById(idProduto);
+            if (opcao != null) {
+                requisicao.addProduto(opcao);
+                System.out.println("Produto adicionado à requisição.");
+            } else {
+                System.out.println("Produto não encontrado.");
+            }
+        } else {
+            System.out.println("Requisição não encontrada.");
+        }
+    }
+
+    private Requisicao localizarRequisicao(int idRequisicao) {
+        for (Requisicao requisicao : atendidas) {
+            if (requisicao != null && requisicao.getId() == idRequisicao) {
+                return requisicao;
+            }
+        }
+        for (Requisicao requisicao : espera) {
+            if (requisicao != null && requisicao.getId() == idRequisicao) {
+                return requisicao;
+            }
+        }
+        return null;
+    }
 }
