@@ -3,6 +3,7 @@ package com.calabreso.restaurante.entity;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class Requisicao {
 
@@ -12,7 +13,6 @@ public class Requisicao {
 	private LocalDateTime entrada;
 	private LocalDateTime saida;
 	private boolean encerrada;
-
 	public Requisicao(int quantPessoas, Cliente cliente) {
 		this.quantPessoas = 1;
 		if(quantPessoas > 1 )
@@ -21,6 +21,7 @@ public class Requisicao {
 		entrada = saida = null;
 		mesa = null;
 		encerrada = false;
+		new ArrayList<>();
 	}
 
 	public Mesa encerrar() {
@@ -64,4 +65,19 @@ public class Requisicao {
 		}
 		return stringReq.toString();
 	}
+
+	public void addProduto(OpcaoCardapio opcao) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'addProduto'");
+	}
+
+    public int getId() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getId'");
+    }
+
+    public double calcularTotal() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'calcularTotal'");
+    }
 }
