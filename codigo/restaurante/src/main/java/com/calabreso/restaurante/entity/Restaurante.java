@@ -13,7 +13,7 @@ public class Restaurante {
     private int quantMesas;
     private int requisicoesAtendidas;
     private int requisicoesEmEspera;
-    private Cardapio cardapio; // Adicionado o cardápio
+    private Cardapio cardapio; // Adic. cardápio
 
     public Restaurante() {
         mesas = new Mesa[MAX_MESAS];
@@ -21,7 +21,7 @@ public class Restaurante {
         atendidas = new Requisicao[MAX_FILA];
         espera = new Requisicao[MAX_FILA];
         quantMesas = quantClientes = requisicoesAtendidas = requisicoesEmEspera = 0;
-        cardapio = new Cardapio(); // Inicialização do cardápio
+        cardapio = new Cardapio(); // Inic. cardápio
         criarMesas();
     }
 
@@ -135,7 +135,7 @@ public class Restaurante {
         return resposta;
     }
 
-    // Novos métodos para interagir com o Cardápio
+    // Interagir com o Cardápio
     public String exibirCardapioCompleto() {
         return cardapio.exibirCardapio("1");
     }
@@ -152,7 +152,7 @@ public class Restaurante {
         return cardapio.getOpcaoById(idOpcao);
     }
 
-    // Método para incluir produtos em uma requisição
+    // Incluir produtos em uma requisição
     public void incluirProdutoNaRequisicao(int idRequisicao, int idProduto) {
         Requisicao requisicao = localizarRequisicao(idRequisicao);
         if (requisicao != null) {
@@ -168,7 +168,7 @@ public class Restaurante {
         }
     }
 
-    // Método para localizar uma requisição
+    // Localizar uma requisição
     private Requisicao localizarRequisicao(int idRequisicao) {
         for (Requisicao requisicao : atendidas) {
             if (requisicao != null && requisicao.getId() == idRequisicao) {
@@ -183,7 +183,7 @@ public class Restaurante {
         return null;
     }
 
-    // Método para fechar uma requisição
+    // Fechar uma requisição
     public void fecharRequisicao(int idRequisicao) {
         Requisicao requisicao = localizarRequisicao(idRequisicao);
         if (requisicao != null) {
@@ -194,7 +194,7 @@ public class Restaurante {
         }
     }
 
-    // Método para pedir a conta de uma requisição
+    // Pedir a conta de uma requisição
     public double pedirContaRequisicao(int idRequisicao) {
         Requisicao requisicao = localizarRequisicao(idRequisicao);
         if (requisicao != null) {
