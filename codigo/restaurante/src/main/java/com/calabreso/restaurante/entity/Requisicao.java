@@ -3,6 +3,8 @@ package com.calabreso.restaurante.entity;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Requisicao {
 
@@ -12,6 +14,7 @@ public class Requisicao {
 	private LocalDateTime entrada;
 	private LocalDateTime saida;
 	private boolean encerrada;
+	private List<OpcaoCardapio> produtos;
 
 	public Requisicao(int quantPessoas, Cliente cliente) {
 		this.quantPessoas = 1;
@@ -21,6 +24,7 @@ public class Requisicao {
 		entrada = saida = null;
 		mesa = null;
 		encerrada = false;
+		this.produtos = new ArrayList<>();
 	}
 
 	public Mesa encerrar() {
