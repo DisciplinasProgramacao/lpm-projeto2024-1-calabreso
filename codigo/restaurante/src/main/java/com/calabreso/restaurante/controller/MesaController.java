@@ -1,3 +1,16 @@
+package com.calabreso.restaurante.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.calabreso.restaurante.entity.Cliente;
+import com.calabreso.restaurante.entity.Mesa;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 @RestController
 @RequestMapping("/mesas")
 public class MesaController {
