@@ -58,53 +58,24 @@ public class RequisicaoController {
         return id;
     }
     
-    @GetMapping("/mesa/{id}/ocupada")
-    public boolean getOcupadaMesa(@PathVariable("id") int id) {
-        return false;
-    }
-
-    @GetMapping("/mesa/{id}/cliente")
-    public Cliente getClienteMesa(@PathVariable("id") int id) {
-    }
-
-    @PostMapping("/mesa/{id}/cliente/{idCliente}")
-    public void setClienteMesa(@PathVariable("id") int id, @PathVariable("idCliente") int idCliente) {
-    }
-
-    @GetMapping("/mesa/{id}/cliente/{idCliente}")
-    public boolean clienteEstaNaMesa(@PathVariable("id") int id, @PathVariable("idCliente") int idCliente) {
-    }
-
-    @GetMapping("/mesa/{id}/cliente/{idCliente}/nome")
-    public String getNomeClienteMesa(@PathVariable("id") int id, @PathVariable("idCliente") int idCliente) {
-    }
-
-    @GetMapping("/mesa/{id}/cliente/{idCliente}/id")
-    public int getIdClienteMesa(@PathVariable("id") int id, @PathVariable("idCliente") int idCliente) {
-    }
-
     @GetMapping("/mesa/{id}/cliente/{idCliente}/descricao")
     public String getDescricaoClienteMesa(@PathVariable("id") int id, @PathVariable("idCliente") int idCliente) {
-    }
-
-    @GetMapping("/mesa/{id}/cliente/{idCliente}/idMesa")
-    public int getIdMesaCliente(@PathVariable("id") int id, @PathVariable("idCliente") int idCliente) {
+        return ""; 
     }
 
     @GetMapping("/mesa/{id}/cliente/{idCliente}/ocupada")
     public boolean getOcupadaCliente(@PathVariable("id") int id, @PathVariable("idCliente") int idCliente) {
-    }
-
-    @GetMapping("/mesa/{id}/cliente/{idCliente}/quantPessoas")
-    public int getQuantPessoasCliente(@PathVariable("id") int id, @PathVariable("idCliente") int idCliente) {
+        return false; 
     }
 
     @GetMapping("/mesa/{id}/cliente/{idCliente}/idMesa")
     public int getIdMesaCliente(@PathVariable("id") int id, @PathVariable("idCliente") int idCliente) {
+        return 0; 
     }
 
     @GetMapping("/mesa/{id}/cliente/{idCliente}/id")
     public int getIdCliente(@PathVariable("id") int id, @PathVariable("idCliente") int idCliente) {
+        return 0; 
     }
     
    
