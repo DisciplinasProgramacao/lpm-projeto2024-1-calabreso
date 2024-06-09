@@ -159,13 +159,8 @@ public class Restaurante {
             OpcaoCardapio opcao = getOpcaoCardapioById(idProduto);
             if (opcao != null) {
                 requisicao.addProduto(opcao);
-                System.out.println("Produto adicionado à requisição.");
-            } else {
-                System.out.println("Produto não encontrado.");
-            }
-        } else {
-            System.out.println("Requisição não encontrada.");
-        }
+            }  
+        } 
     }
 
     // Localizar uma requisição
@@ -188,10 +183,7 @@ public class Restaurante {
         Requisicao requisicao = localizarRequisicao(idRequisicao);
         if (requisicao != null) {
             requisicao.encerrar();
-            System.out.println("Requisição encerrada.");
-        } else {
-            System.out.println("Requisição não encontrada.");
-        }
+        } 
     }
 
     // Pedir a conta de uma requisição
@@ -199,9 +191,7 @@ public class Restaurante {
         Requisicao requisicao = localizarRequisicao(idRequisicao);
         if (requisicao != null) {
             return requisicao.calcularTotal();
-        } else {
-            System.out.println("Requisição não encontrada.");
+        } 
             return 0.0;
-        }
     }
 }
