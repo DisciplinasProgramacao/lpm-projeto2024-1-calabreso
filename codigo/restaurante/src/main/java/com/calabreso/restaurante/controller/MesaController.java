@@ -1,53 +1,54 @@
 package com.calabreso.restaurante.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 
-import com.calabreso.restaurante.entity.Cliente;
-import com.calabreso.restaurante.entity.Mesa;
-
-import java.util.List;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+import com.calabreso.restaurante.entity.Mesa;
+
+@Controller
 @RequestMapping("/mesas")
-public class MesaController<MesaService> {
+public class MesaController {
 
-    private final MesaService mesaService;
+@PersistenceUnit
+private EntityManagerFactory entityManagerFactory;
 
-    public MesaController(MesaService mesaService) {
-        this.mesaService = mesaService;
-    }
+@PostMapping("/criar")
+@ResponseBody
+public Mesa criarMesa(@RequestBody Mesa mesa) {
+EntityManager em = entityManagerFactory.createEntityManager();
 
-    @PostMapping
-    public Mesa criarMesa(@RequestBody Mesa mesa) {
-        return ((Object) mesaService).criarMesa(mesa);
-    }
+try {
+em.getTransaction().begin();
+em.persist(mesa);
+em.getTransaction().commit();
+} finally {
+if (em.isOpen()) {
+em.close();
+}
+}
 
-    @GetMapping
-    public List<Mesa> obterTodasMesas() {
-        return ((Object) mesaService).obterTodasMesas();
-    }
+return mesa;
+}
 
-    @GetMapping("/{id}")
-    public Mesa obterMesaPorId(@PathVariable int id) {
-        return ((Object) mesaService).obterMesaPorId(id);
-    }
+@GetMapping("/buscar/{id}")
+@ResponseBody
+public Mesa getMesa(@PathVariable Integer id) {
+EntityManager em = entityManagerFactory.createEntityManager();
 
-    @PutMapping("/{id}")
-    public Mesa atualizarMesa(@PathVariable int id, @RequestBody Mesa mesa) {
-        return ((Object) mesaService).atualizarMesa(id, mesa);
-    }
-
-    @DeleteMapping("/{id}")
-    public void removerMesa(@PathVariable int id) {
-        ((Object) mesaService).removerMesa(id);
-    }
+try {
+Mesa mesa = em.find(Mesa.class, id);
+return mesa;
+} finally {
+if (em.isOpen()) {
+em.close();
+}
+}
+}
 }
