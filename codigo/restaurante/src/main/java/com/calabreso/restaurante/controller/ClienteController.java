@@ -1,13 +1,16 @@
 package com.calabreso.restaurante;
 
-import java.util.Scanner;
-
 import com.calabreso.restaurante.entity.Cliente;
+import com.calabreso.restaurante.repository.ClienteRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import com.calabreso.restaurante.entity.Requisicao;
-import com.calabreso.restaurante.entity.Restaurante;
+import javax.validation.Valid;
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/clientes")
@@ -17,9 +20,9 @@ public class ClienteController {
     private ClienteRepository clienteRepository; // Injeção do repositório de clientes
 
     @PostMapping
-    public ResponseEntity<Cliente> criarCliente(@RequestBody Cliente cliente) {
+    public ResponseEntity<Cliente> criarCliente(@Valid @RequestBody Cliente cliente) {
         if (cliente.getNomeCliente().length() <= 2) {
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().build();
         }
 
         clienteRepository.save(cliente);
@@ -42,14 +45,14 @@ public class ClienteController {
     }
 
     @PutMapping("/{idCliente}")
-    public ResponseEntity<Cliente> atualizarCliente(@PathVariable int idCliente, @RequestBody Cliente clienteAtualizado) {
+    public ResponseEntity<Cliente> atualizarCliente(@PathVariable int idCliente, @Valid @RequestBody Cliente clienteAtualizado) {
         Cliente clienteExistente = clienteRepository.findById(idCliente).orElse(null);
         if (clienteExistente == null) {
             return ResponseEntity.notFound().build();
         }
 
         if (clienteAtualizado.getNomeCliente().length() <= 2) {
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().build();
         }
 
         clienteExistente.setNomeCliente(clienteAtualizado.getNomeCliente());
