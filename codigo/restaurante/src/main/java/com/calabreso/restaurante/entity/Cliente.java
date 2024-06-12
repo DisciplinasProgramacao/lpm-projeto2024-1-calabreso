@@ -2,29 +2,22 @@ package com.calabreso.restaurante.entity;
 
 public class Cliente {
 
-	private static int ultimoID;
-	private String nomeCliente;
-	private int idCliente;
+    private Long idCliente;
+    private String nome;
 
-	static{
-		ultimoID = 0;
-	}
+    public Long getIdCliente() {
+        return idCliente;
+    }
 
-	public Cliente(String nome) {
-		if(nome.length() > 2)
-			nomeCliente = nome;	
-		else 
-			nomeCliente = "Cliente anônimo";
-		idCliente = ++ultimoID;
-	}
+    public void setIdCliente(Long idCliente) {
+        this.idCliente = idCliente;
+    }
 
-	@Override
-	public String toString(){
-		return String.format("Nome: %s - identificador: %d", nomeCliente, idCliente);
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	@Override
-	public int hashCode(){
-		return idCliente;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 }
