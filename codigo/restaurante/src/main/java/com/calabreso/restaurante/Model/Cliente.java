@@ -1,25 +1,39 @@
 package com.calabreso.restaurante.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.io.Serializable;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
+@Table(name = Cliente.TABLE_NAME)
 public class Cliente {
+    public interface CreateCliente { }
+    public interface UpdateCliente { }
+
+    public static final String TABLE_NAME = "cliente";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "cliente_id", unique = true)
+    private Integer clienteId;
 
+    @Column(name = "nome", nullable = false)
+    @NotNull(groups = CreateCliente.class)
+    @NotEmpty(groups = CreateCliente.class)
     private String nome;
 
-    public Long getId() {
-        return id;
+    public Cliente() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Cliente(Integer clienteId, String nome) {
+        this.clienteId = clienteId;
+        this.nome = nome;
+    }
+
+    public int getClienteId() {
+        return clienteId;
     }
 
     public String getNome() {
@@ -30,12 +44,10 @@ public class Cliente {
         this.nome = nome;
     }
 
-    // Additional methods (if needed)
-
     @Override
     public String toString() {
         return "Cliente{" +
-                "id=" + id +
+                "clienteId=" + clienteId +
                 ", nome='" + nome + '\'' +
                 '}';
     }
