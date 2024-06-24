@@ -6,12 +6,12 @@ import java.util.ArrayList;
  * Classe que representa um pedido fechado no restaurante.
  * Herda a funcionalidade básica da classe Pedido e adiciona validações e cálculos específicos.
  */
-public class PedidoFechado extends Pedido {
+public class Pedidofechado extends Pedido {
 
     /**
      * Construtor da classe PedidoFechado.
      */
-    public PedidoFechado(int idMesa, ArrayList<OpcaoCardapio> itens) throws IllegalArgumentException {
+    public Pedidofechado(int idMesa, ArrayList<OpcaoCardapio> itens) throws IllegalArgumentException {
         super(); // Chamando o construtor da classe pai
         if (itens == null || itens.isEmpty()) {
             throw new IllegalArgumentException("O pedido deve conter pelo menos um item.");
@@ -48,7 +48,7 @@ public class PedidoFechado extends Pedido {
      * Fecha o pedido e calcula o valor por pessoa, se o número de pessoas for válido.
      */
     @Override
-    public String fecharPedido(int qtdPessoasDividirConta) throws IllegalArgumentException {
+    public String fecharfedido(int qtdPessoasDividirConta) throws IllegalArgumentException {
         if (qtdPessoasDividirConta <= 0) {
             throw new IllegalArgumentException("A quantidade de pessoas para dividir a conta deve ser maior que zero.");
         }
