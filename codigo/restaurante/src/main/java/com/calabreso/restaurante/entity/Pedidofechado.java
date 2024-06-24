@@ -48,7 +48,7 @@ public class Pedidofechado extends Pedido {
      * Fecha o pedido e calcula o valor por pessoa, se o número de pessoas for válido.
      */
     @Override
-    public String fecharfedido(int qtdPessoasDividirConta) throws IllegalArgumentException {
+    public String fecharPedido(int qtdPessoasDividirConta) throws IllegalArgumentException {
         if (qtdPessoasDividirConta <= 0) {
             throw new IllegalArgumentException("A quantidade de pessoas para dividir a conta deve ser maior que zero.");
         }
