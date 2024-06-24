@@ -33,7 +33,7 @@ public class Requisicao {
         this.mesa = null;
         this.encerrada = false;
         this.produtos = new ArrayList<>();
-        this.id = (int) (Math.random() * 10000); // Geração simples de ID para exemplo
+        this.id = (int) (Math.random() * 10000);
     }
 
     /**
