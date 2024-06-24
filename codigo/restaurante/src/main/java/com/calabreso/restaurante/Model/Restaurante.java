@@ -1,4 +1,4 @@
-package com.lpm.gardenbites.models;
+package com.calabreso.restaurante.entity;
 
 import jakarta.persistence.*;
 
