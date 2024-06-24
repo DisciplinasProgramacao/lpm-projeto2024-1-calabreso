@@ -1,14 +1,28 @@
 package com.calabreso.restaurante.entity;
 
+import org.jetbrains.annotations.NotNull;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+//import jakarta.persistence.*;
+//import jakarta.validation.constraints.NotEmpty;
+//import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = Cliente.TABLE_NAME)
 public class Cliente {
+    @Id
+    private Long id;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
     public interface CreateCliente { }
     public interface UpdateCliente { }
 
@@ -20,8 +34,6 @@ public class Cliente {
     private Integer clienteId;
 
     @Column(name = "nome", nullable = false)
-    @NotNull(groups = CreateCliente.class)
-    @NotEmpty(groups = CreateCliente.class)
     private String nome;
 
     public Cliente() {

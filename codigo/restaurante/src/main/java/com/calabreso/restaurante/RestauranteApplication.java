@@ -1,23 +1,20 @@
 package com.calabreso.restaurante;
 
+import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+import com.calabreso.restaurante.entity.*;
 import com.calabreso.restaurante.entity.Cliente;
-import com.calabreso.restaurante.entity.Requisicao;
 import com.calabreso.restaurante.entity.Restaurante;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class RestauranteApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(RestauranteApplication.class, args);
-	}
-public class App {
     static Scanner teclado;
     static Restaurante restaurante;
+
+    static Cardapio cardapio;
 
     /**
      * "Limpa" a tela (códigos de terminal VT-100)
@@ -34,7 +31,7 @@ public class App {
 
     static void cabecalho() {
         limparTela();
-        System.out.println(" LPM VEGAN - v0.1 ");
+        System.out.println(" LPM VEGAN - v1.0 ");
         System.out.println("=====================");
     }
 
@@ -45,7 +42,9 @@ public class App {
         System.out.println("2 - Verificar Fila");
         System.out.println("3 - Solicitar Mesa");
         System.out.println("4 - Encerrar Mesa");
-        System.out.println("5 - Processar Fila");
+        System.out.println("5 - Exibir Cardápio");
+        System.out.println("6 - Fazer Pedido");
+        System.out.println("7 - Fechar Conta");
         System.out.println("0 - Sair");
         System.out.print("Digite sua opção: ");
         opcao = Integer.parseInt(teclado.nextLine());
@@ -54,13 +53,15 @@ public class App {
 
     static void mostrarFila(){
         cabecalho();
-        System.out.println(restaurante.filaDeEspera());
+        System.out.println(restaurante.mostrarFila());
         pausa();
     }
 
     static void exibirMesas() {
         cabecalho();
-        System.out.println(restaurante.statusMesas());
+        if (restaurante.statusMesas()) {
+            System.out.println("Mesa liberada!");
+        }
         pausa();
     }
     
@@ -82,7 +83,7 @@ public class App {
         String nome;
         System.out.print("Nome do cliente: ");
         nome = teclado.nextLine();
-        Cliente novo = new Cliente(nome);
+        Cliente novo = new Cliente(1, nome);
         System.out.println("Cliente cadastrado: " + novo);
         pausa();
         return novo;
@@ -104,6 +105,11 @@ public class App {
         pausa();
     }
 
+
+    static String escolherFormatoCardapio() {
+        return "Deseja exibir o cardápio completo, ou apenas bebidas ou comidas?\n1- Cardápío completo\n2 - Bebidas\n3 - Comidas";
+    }
+
     static Requisicao processarFila() {
        return restaurante.processarFila();
     }
@@ -115,38 +121,116 @@ public class App {
         idMesa = Integer.parseInt(teclado.nextLine());
         Requisicao finalizada = restaurante.encerrarAtendimento(idMesa);
         if (finalizada != null) {
-            System.out.println(finalizada);
+            if (Objects.equals(finalizada.toString(), " Em espera.")) {
+                System.out.println("Atendimento da mesa " + idMesa + " encerrado com sucesso!");
+            } else {
+                System.out.println(finalizada);
+            }
         } else {
             System.out.println("Mesa " + idMesa + " não está em atendimento");
         }
         pausa();
     }
 
-    public static void main(String[] args) throws Exception {
-        teclado = new Scanner(System.in);
-        int opcao;
-        restaurante = new Restaurante();
-        do {
-            opcao = MenuPrincipal();
-            switch (opcao) {
-                case 1 -> exibirMesas();
-                case 2 -> mostrarFila();
-                case 3 -> solicitarMesa();
-                case 4 -> encerrarMesa();
-                case 5 -> {
-                    Requisicao atendida = processarFila();
-                    if(atendida!=null){
-                        System.out.println(atendida);
-                    }
-                    else{
-                        System.out.println("Fila vazia ou mesas não disponíveis. Favor verificar a situação.");
-                    }
-                    pausa();
-                }
-
-            }
-        } while (opcao != 0);
-        teclado.close();
+    static void exibirCardapio() {
+        System.out.println(escolherFormatoCardapio());
+        String opcao = teclado.nextLine();
+        System.out.println(cardapio.exibirCardapio(opcao));
+        pausa();
     }
-}
+
+    static void fazerPedido() {
+        System.out.println("Qual o ID da sua mesa?");
+        int idMesa =  Integer.parseInt(teclado.nextLine());
+        if (restaurante.getMesaById(idMesa).estahLiberada(100)) {
+            throw new IllegalArgumentException("Mesa sem cliente alocado");
+        }
+
+        Pedido pedido = new Pedido();
+        pedido.setIdMesa(idMesa);
+
+        ArrayList<OpcaoCardapio> itensDoPedido = new ArrayList<OpcaoCardapio>();
+        int opcaoMenu;
+        do {
+            System.out.println("Qual o ID do item que você deseja pedir?");
+            int idOpcao =  Integer.parseInt(teclado.nextLine());
+            OpcaoCardapio opcao = cardapio.getOpcaoById(idOpcao);
+            itensDoPedido.add(opcao);
+//          adicionar opcao ao pedido da mesa
+            System.out.println(opcao.getNome() + " adicionado com sucesso ao seu pedido!");
+
+            System.out.println("Deseja adicionar outro item ao seu pedido?");
+            System.out.println("1- SIM");
+            System.out.println("2- NAO");
+            opcaoMenu =  Integer.parseInt(teclado.nextLine());
+        } while (opcaoMenu == 1);
+
+        pedido.setItens(itensDoPedido);
+        System.out.println("Pronto, seu pedido será preparado!");
+        pausa();
+    }
+
+    static void fecharConta() {
+        System.out.println("Qual o ID da sua mesa?");
+        int idMesa =  Integer.parseInt(teclado.nextLine());
+        if (restaurante.getMesaById(idMesa).estahLiberada(100)) {
+            throw new IllegalArgumentException("Mesa sem cliente alocado");
+        }
+
+        System.out.println("Quantas pessoas dividirão a conta?");
+        int qtdPessoas =  Integer.parseInt(teclado.nextLine());
+
+//        pegar pedido da mesa
+        ArrayList<OpcaoCardapio> itensPedido = new ArrayList<OpcaoCardapio>();
+        itensPedido.add(cardapio.getOpcaoById(1));
+        itensPedido.add(cardapio.getOpcaoById(5));
+        itensPedido.add(cardapio.getOpcaoById(6));
+        itensPedido.add(cardapio.getOpcaoById(11));
+        Pedido pedido = new Pedido();
+        pedido.setIdMesa(idMesa);
+        pedido.setItens(itensPedido);
+
+        System.out.println("=== PEDIDO PARA A MESA " + idMesa);
+        for (OpcaoCardapio item : itensPedido) {
+            System.out.println("- " + item.getNome() + "  R$" + item.getPreco());
+        }
+
+        System.out.println(pedido.fecharPedido(qtdPessoas));
+    }
+
+    public static void main(String[] args) throws Exception {
+        try {
+            teclado = new Scanner(System.in);
+            int opcao;
+            restaurante = new Restaurante();
+            cardapio =  new Cardapio();
+            do {
+                opcao = MenuPrincipal();
+                switch (opcao) {
+                    case 1 -> exibirMesas();
+                    case 2 -> mostrarFila();
+                    case 3 -> solicitarMesa();
+                    case 4 -> encerrarMesa();
+                    case 5 -> exibirCardapio();
+                    case 6 -> fazerPedido();
+                    case 7 -> fecharConta();
+//                case 5 -> {
+//                    Requisicao atendida = processarFila();
+//                    if(atendida!=null){
+//                        System.out.println(atendida);
+//                    }
+//                    else{
+//                        System.out.println("Fila vazia ou mesas não disponíveis. Favor verificar a situação.");
+//                    }
+//                    pausa();
+//                }
+
+                }
+            } while (opcao != 0);
+            teclado.close();
+        } catch (NumberFormatException e) { // caso o usuário pressione Enter sem digitar nenhum número
+            System.out.println("Opção inválida");
+        }
+
+    }
 }

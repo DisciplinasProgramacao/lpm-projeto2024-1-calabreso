@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Requisicao {
 
-    private Cliente cliente;
+    private com.calabreso.restaurante.entity.Cliente cliente;
     private Mesa mesa;
     private int quantPessoas;
     private LocalDateTime entrada;
@@ -25,7 +25,7 @@ public class Requisicao {
      * @param quantPessoas a quantidade de pessoas para esta requisição
      * @param cliente o cliente que fez a requisição
      */
-    public Requisicao(int quantPessoas, Cliente cliente) {
+    public Requisicao(int quantPessoas, com.calabreso.restaurante.entity.Cliente cliente) {
         this.quantPessoas = quantPessoas > 1 ? quantPessoas : 1;
         this.cliente = cliente;
         this.entrada = null;
@@ -138,7 +138,7 @@ public class Requisicao {
     @Override
     public String toString() {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        StringBuilder stringReq = new StringBuilder(cliente.toString());
+        StringBuilder stringReq = new StringBuilder();
         if (mesa != null) {
             stringReq.append("\n").append(mesa.toString()).append("\n");
             stringReq.append("Entrada em ").append(formato.format(entrada)).append("\n");
