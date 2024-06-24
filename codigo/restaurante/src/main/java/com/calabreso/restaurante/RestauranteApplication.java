@@ -142,6 +142,7 @@ public class RestauranteApplication {
     static void fazerPedido() {
         System.out.println("Qual o ID da sua mesa?");
         int idMesa =  Integer.parseInt(teclado.nextLine());
+        // if (restaurante.mesaLiberada(idMesa))
         if (restaurante.getMesaById(idMesa).estahLiberada(100)) {
             throw new IllegalArgumentException("Mesa sem cliente alocado");
         }
@@ -150,6 +151,8 @@ public class RestauranteApplication {
         pedido.setIdMesa(idMesa);
 
         ArrayList<OpcaoCardapio> itensDoPedido = new ArrayList<OpcaoCardapio>();
+        System.out.println(cardapio.exibirCardapio(
+            "1"));
         int opcaoMenu;
         do {
             System.out.println("Qual o ID do item que você deseja pedir?");
