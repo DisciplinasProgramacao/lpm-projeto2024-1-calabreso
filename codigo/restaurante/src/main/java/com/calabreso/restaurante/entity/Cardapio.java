@@ -27,16 +27,24 @@ public class Cardapio {
 	}
 
 	public OpcaoCardapio[] getOpcoes() {
-		return opcoes;
+		return this.opcoes;
 	}
 
 	public void setOpcoes(OpcaoCardapio[] opcoes) {
 		this.opcoes = opcoes;
 	}
 
-	public String escolherFormatoCardapio() {
-		return "Deseja exibir o cardápio completo, ou apenas bebidas ou comidas?\n1- Cardápío completo\n2 - Bebidas\n3 - Comidas";
+	public void addOpcao(OpcaoCardapio novaOpcao) {
+		if (this.opcoes == null) {
+			this.opcoes = new OpcaoCardapio[]{novaOpcao};
+		} else {
+			OpcaoCardapio[] novaLista = new OpcaoCardapio[this.opcoes.length + 1];
+			System.arraycopy(this.opcoes, 0, novaLista, 0, this.opcoes.length);
+			novaLista[this.opcoes.length] = novaOpcao;
+			this.opcoes = novaLista;
+		}
 	}
+
 
 	public String exibirCardapio(String opcao) {
         return switch (opcao) {
@@ -48,10 +56,11 @@ public class Cardapio {
 	}
 
 	public String exibirBebidas() {
-		String retornoBebidas = null;
+		String retornoBebidas = "";
 		for (OpcaoCardapio opcao : this.getOpcoes()) {
 			if (Objects.equals(opcao.getTipo(), "bebida")) {
-				retornoBebidas = "- " + opcao.getNome() + "\t R$ " + opcao.getPreco() + "\n";
+				retornoBebidas += opcao.getId() + "- " + opcao.getNome() + "\t R$ " + opcao.getPreco() + "\n";
+//				System.out.println(retornoBebidas);
 			}
 		}
 
@@ -59,10 +68,11 @@ public class Cardapio {
 	}
 
 	public String exibirComidas() {
-		String retornoComidas = null;
+		String retornoComidas = "";
 		for (OpcaoCardapio opcao : this.getOpcoes()) {
 			if (Objects.equals(opcao.getTipo(), "comida")) {
-				retornoComidas = "- " + opcao.getNome() + "\t R$ " + opcao.getPreco() + "\n";
+				retornoComidas += opcao.getId() + "- " + opcao.getNome() + "\t R$ " + opcao.getPreco() + "\n";
+//				System.out.println(retornoComidas);
 			}
 		}
 
@@ -70,7 +80,6 @@ public class Cardapio {
 	}
 
 	public OpcaoCardapio getOpcaoById(int idOpcao) {
-		Stream<OpcaoCardapio> opcao = Arrays.stream(this.getOpcoes()).filter(opcaoCardapio -> opcaoCardapio.getId() == idOpcao);
-		return (OpcaoCardapio) opcao;
+        return Arrays.stream(this.getOpcoes()).filter(opcaoCardapio -> opcaoCardapio.getId() == idOpcao).findFirst().get();
 	}
 }
