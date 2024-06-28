@@ -79,3 +79,21 @@ Restaurante - ok com documentação parcial - Matheus - 10
 
 Main sem fazer - Felipe - 0 
 	
+## Sprint 4 - Apresentação em 24/06
+  - Nota de grupo 1/6 pontos
+	- Modelo atualizado - não está atualizado para pedido fechado.
+	- Apresentação - não executou. 
+	
+  - Nota individual ( 14 pontos ) 
+    - Ajustes do último quadro "Projeto GitHub"
+	- Correções das sprints anteriores
+	
+### Cartões sprint 4
+
+Restaurante: (Pedro) - finalizar requisicao inadequado (foreach para todas?). Não armazena clientes. Sem métodos de incluir pedido, finalizar/pedir conta etc. - 4
+
+Requisicao: (Matheus) - faltando "conta por pessoa". Streams nas operações. - 10
+
+PedidoFechado: (Lucas) - não valida produtos. Valor total usa mesma regra. Dividir por pessoas é da requisição. Tem que receber produtos individualmente. - 4
+
+Main (João P + Nelson). Lançando exceção não tratada no main. Não faz a chamada dos métodos do projeto/diagrama para os processos. - 7 
