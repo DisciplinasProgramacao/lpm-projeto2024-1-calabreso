@@ -15,7 +15,9 @@ Mesa - sem documentação. Set sem validação - Nelson - 8 (+1) correcao poster
 
 Restaurante - sem documentação. gets/sets desnecessários e 'tipos estranhos' (String) - João M. - 9
 
-Cliente - sem fazer - Pedro Lobato - 0
+**REVISADO** Cliente - entrega em atraso (commit 28/04, ff5f64793) - Pedro Lobato - **6 REVISADO**
+  - print na classe. Construtor sem validar dados. Métodos fazerPedido não tem relação com requisitos. "declararQuantidade" supostamente criaria uma requisição(?). Sem validação na quantidade.
+  - Teste somente de situações positivas (não testou quantidade negativa, cliente sem nome etc). Teste de requisito que nem existe (pizza de pepperoni?)
 
 Requisição - sem fazer - Matheus  - 0
 
