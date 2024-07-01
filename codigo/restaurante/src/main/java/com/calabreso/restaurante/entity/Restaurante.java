@@ -28,11 +28,16 @@ public class Restaurante {
     private Long id;
 
     private Mesa[] mesas = new Mesa[]{
-            new Mesa(2),
             new Mesa(4),
             new Mesa(4),
+            new Mesa(4),
+            new Mesa(4),
+            new Mesa(6),
+            new Mesa(6),
+            new Mesa(6),
+            new Mesa(6),
             new Mesa(8),
-            new Mesa(10)
+            new Mesa(8),
     };
 
     public Restaurante() {

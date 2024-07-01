@@ -2,6 +2,7 @@ package com.calabreso.restaurante;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Scanner;
 
 import com.calabreso.restaurante.entity.*;
@@ -35,12 +36,31 @@ public class RestauranteApplication {
         System.out.println("=====================");
     }
 
+    static void registrarRequisicao(Requisicao requisicao) {
+        restaurante.registrarRequisicao(requisicao);
+    }
+
+    static void atenderRequisicao() {
+        cabecalho();
+        int idCli;
+        System.out.print("Digite o id do cliente: ");
+        idCli = Integer.parseInt(teclado.nextLine());
+        Cliente localizado = restaurante.localizarCliente(idCli);
+        if (localizado == null) {
+            System.out.println("Cliente não localizado. Vamos cadastrá-lo:");
+            localizado = cadastrarNovoCliente();
+            restaurante.addCliente(localizado);
+        }
+        Optional<Requisicao> requisicao = criarRequisicao(localizado);
+        requisicao.ifPresent(RestauranteApplication::registrarRequisicao);
+    }
+
     static int MenuPrincipal() {
         int opcao;
         cabecalho();    
         System.out.println("1 - Verificar Mesas");
         System.out.println("2 - Verificar Fila");
-        System.out.println("3 - Solicitar Mesa");
+        System.out.println("3 - Cadastrar nova requisição");
         System.out.println("4 - Encerrar Mesa");
         System.out.println("5 - Exibir Cardápio");
         System.out.println("6 - Fazer Pedido");
@@ -51,7 +71,7 @@ public class RestauranteApplication {
         return opcao;
     }
 
-    static void mostrarFila(){
+    static void filaDeEspera(){
         cabecalho();
         System.out.println(restaurante.mostrarFila());
         pausa();
@@ -59,24 +79,8 @@ public class RestauranteApplication {
 
     static void exibirMesas() {
         cabecalho();
-        if (restaurante.statusMesas()) {
-            System.out.println("Mesa liberada!");
-        }
+        System.out.println(restaurante.statusMesas());
         pausa();
-    }
-    
-    static void solicitarMesa() {
-        int idCli;
-        cabecalho();
-        System.out.print("Digite o id do cliente: ");
-        idCli = Integer.parseInt(teclado.nextLine());
-        Cliente localizado = restaurante.localizarCliente(idCli);
-        if (localizado == null) {
-            System.out.println("Cliente não localizado. Vamos cadastrá-lo:");
-            localizado = cadastrarNovoCliente();
-            restaurante.addCliente(localizado);
-        }
-        criarRequisicao(localizado);
     }
 
     static Cliente cadastrarNovoCliente() {
@@ -89,29 +93,26 @@ public class RestauranteApplication {
         return novo;
     }
 
-    static void criarRequisicao(Cliente cliente) {
+    static Optional<Requisicao> criarRequisicao(Cliente cliente) {
         int quantasPessoas;
         cabecalho();
         System.out.print("Para quantas pessoas será a mesa? ");
         quantasPessoas = Integer.parseInt(teclado.nextLine());
         Requisicao novaRequisicao = new Requisicao(quantasPessoas, cliente);
         restaurante.registrarRequisicao(novaRequisicao);
-        novaRequisicao = processarFila();
+        novaRequisicao = restaurante.processarFila();
         if(novaRequisicao!=null){
             System.out.println(novaRequisicao);
         } else {
             System.out.println("Não há mesas disponíveis no momento. Requisição em espera");
         }
         pausa();
+        return Optional.of(novaRequisicao);
     }
 
 
     static String escolherFormatoCardapio() {
         return "Deseja exibir o cardápio completo, ou apenas bebidas ou comidas?\n1- Cardápío completo\n2 - Bebidas\n3 - Comidas";
-    }
-
-    static Requisicao processarFila() {
-       return restaurante.processarFila();
     }
 
     static void encerrarMesa() {
@@ -142,40 +143,53 @@ public class RestauranteApplication {
     static void fazerPedido() {
         System.out.println("Qual o ID da sua mesa?");
         int idMesa =  Integer.parseInt(teclado.nextLine());
-        // if (restaurante.mesaLiberada(idMesa))
-        if (restaurante.getMesaById(idMesa).estahLiberada(100)) {
-            throw new IllegalArgumentException("Mesa sem cliente alocado");
-        }
+         if (restaurante.mesaLiberada(idMesa)) {
+             Pedido pedido = new Pedido();
+             pedido.setIdMesa(idMesa);
 
-        Pedido pedido = new Pedido();
-        pedido.setIdMesa(idMesa);
-
-        ArrayList<OpcaoCardapio> itensDoPedido = new ArrayList<OpcaoCardapio>();
-        System.out.println(cardapio.exibirCardapio(
-            "1"));
-        int opcaoMenu;
-        do {
-            System.out.println("Qual o ID do item que você deseja pedir?");
-            int idOpcao =  Integer.parseInt(teclado.nextLine());
-            OpcaoCardapio opcao = cardapio.getOpcaoById(idOpcao);
-            itensDoPedido.add(opcao);
+             ArrayList<OpcaoCardapio> itensDoPedido = new ArrayList<OpcaoCardapio>();
+             System.out.println(cardapio.exibirCardapio(
+                     "1"));
+             int opcaoMenu;
+             do {
+                 System.out.println("Qual o ID do item que você deseja pedir?");
+                 int idOpcao =  Integer.parseInt(teclado.nextLine());
+                 OpcaoCardapio opcao = cardapio.getOpcaoById(idOpcao);
+                 itensDoPedido.add(opcao);
 //          adicionar opcao ao pedido da mesa
-            System.out.println(opcao.getNome() + " adicionado com sucesso ao seu pedido!");
+                 System.out.println(opcao.getNome() + " adicionado com sucesso ao seu pedido!");
 
-            System.out.println("Deseja adicionar outro item ao seu pedido?");
-            System.out.println("1- SIM");
-            System.out.println("2- NAO");
-            opcaoMenu =  Integer.parseInt(teclado.nextLine());
-        } while (opcaoMenu == 1);
+                 System.out.println("Deseja adicionar outro item ao seu pedido?");
+                 System.out.println("1- SIM");
+                 System.out.println("2- NAO");
+                 opcaoMenu =  Integer.parseInt(teclado.nextLine());
+             } while (opcaoMenu == 1);
 
-        pedido.setItens(itensDoPedido);
-        System.out.println("Pronto, seu pedido será preparado!");
-        pausa();
+             pedido.setItens(itensDoPedido);
+             restaurante.pedidos.add(pedido);
+             System.out.println("Pronto, seu pedido será preparado!");
+             System.out.println("Já gostaria de encerrar sua conta?");
+             System.out.println("1- SIM");
+             System.out.println("2- NAO");
+             int encerrarConta = Integer.parseInt(teclado.nextLine());
+             if (encerrarConta == 1) {
+                 fecharConta(Optional.of(idMesa));
+             }
+             pausa();
+         } else {
+             throw new IllegalArgumentException("Mesa sem cliente alocado");
+         }
+
     }
 
-    static void fecharConta() {
-        System.out.println("Qual o ID da sua mesa?");
-        int idMesa =  Integer.parseInt(teclado.nextLine());
+    static void fecharConta(Optional<Integer> idMesaParam) {
+        int idMesa = 0;
+        if (idMesaParam.isPresent()) {
+            idMesa = idMesaParam.get();
+        } else {
+            System.out.println("Qual o ID da sua mesa?");
+            idMesa = Integer.parseInt(teclado.nextLine());
+        }
         if (restaurante.getMesaById(idMesa).estahLiberada(100)) {
             throw new IllegalArgumentException("Mesa sem cliente alocado");
         }
@@ -184,14 +198,7 @@ public class RestauranteApplication {
         int qtdPessoas =  Integer.parseInt(teclado.nextLine());
 
 //        pegar pedido da mesa
-        ArrayList<OpcaoCardapio> itensPedido = new ArrayList<OpcaoCardapio>();
-        itensPedido.add(cardapio.getOpcaoById(1));
-        itensPedido.add(cardapio.getOpcaoById(5));
-        itensPedido.add(cardapio.getOpcaoById(6));
-        itensPedido.add(cardapio.getOpcaoById(11));
-        Pedido pedido = new Pedido();
-        pedido.setIdMesa(idMesa);
-        pedido.setItens(itensPedido);
+        OpcaoCardapio itensPedido = restaurante.pedidos.filter(pedido -> pedido.getIdMesa() == idMesa).get().getItens();
 
         System.out.println("=== PEDIDO PARA A MESA " + idMesa);
         for (OpcaoCardapio item : itensPedido) {
@@ -211,23 +218,12 @@ public class RestauranteApplication {
                 opcao = MenuPrincipal();
                 switch (opcao) {
                     case 1 -> exibirMesas();
-                    case 2 -> mostrarFila();
-                    case 3 -> solicitarMesa();
+                    case 2 -> filaDeEspera();
+                    case 3 -> atenderRequisicao();
                     case 4 -> encerrarMesa();
                     case 5 -> exibirCardapio();
                     case 6 -> fazerPedido();
-                    case 7 -> fecharConta();
-//                case 5 -> {
-//                    Requisicao atendida = processarFila();
-//                    if(atendida!=null){
-//                        System.out.println(atendida);
-//                    }
-//                    else{
-//                        System.out.println("Fila vazia ou mesas não disponíveis. Favor verificar a situação.");
-//                    }
-//                    pausa();
-//                }
-
+                    case 7 -> fecharConta(Optional.of(null));
                 }
             } while (opcao != 0);
             teclado.close();
